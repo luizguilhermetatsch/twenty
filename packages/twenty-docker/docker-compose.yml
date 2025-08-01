@@ -5,8 +5,9 @@ services:
     image: twentycrm/twenty:${TAG:-latest}
     volumes:
       - server-local-data:/app/packages/twenty-server/.local-storage
-    ports:
-      - "3000:3000"
+    #ports:
+    expose:
+      - "3000"
     environment:
       NODE_PORT: 3000
       PG_DATABASE_URL: postgres://${PG_DATABASE_USER:-postgres}:${PG_DATABASE_PASSWORD:-postgres}@${PG_DATABASE_HOST:-db}:${PG_DATABASE_PORT:-5432}/default
@@ -55,12 +56,7 @@ services:
       timeout: 5s
       retries: 20
     restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.twenty.rule=Host(`twenty.luizguilherme.online`)"
-      - "traefik.http.routers.twenty.entrypoints=web,websecure"
-      - "traefik.http.services.twenty.loadbalancer.server.port=3000"
-      - "traefik.http.routers.twenty.tls.certresolver=le"
+    
 
   worker:
     image: twentycrm/twenty:${TAG:-latest}
