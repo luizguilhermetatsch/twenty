@@ -44,6 +44,7 @@ services:
       # EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT:-465}
       # EMAIL_SMTP_USER: ${EMAIL_SMTP_USER:-}
       # EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD:-}
+     
 
     depends_on:
       db:
@@ -54,6 +55,12 @@ services:
       timeout: 5s
       retries: 20
     restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.twenty.rule=Host(`twenty.luizguilherme.online`)"
+      - "traefik.http.routers.twenty.entrypoints=web,websecure"
+      - "traefik.http.services.twenty.loadbalancer.server.port=3000"
+      - "traefik.http.routers.twenty.tls.certresolver=le"
 
   worker:
     image: twentycrm/twenty:${TAG:-latest}
