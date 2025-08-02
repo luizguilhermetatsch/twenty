@@ -50,11 +50,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    healthcheck:
-      test: curl --fail http://localhost:3000/healthz
-      interval: 5s
-      timeout: 5s
-      retries: 20
+    #healthcheck:
+      #test: curl --fail http://localhost:3000/healthz
+      #interval: 5s
+      #timeout: 5s
+      #retries: 20
     restart: always
     
 
